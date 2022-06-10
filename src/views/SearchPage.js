@@ -4,7 +4,7 @@ import Book from "../components/Book";
 
 export default class SearchPage extends Component {
   render() {
-    const { result, searchResult, updateShelf, addBook } = this.props;
+    const { result, searchResult, updateShelf } = this.props;
     const handleInputChange = e => {
       e.preventDefault();
       e.target.value.length === 0 && this.props.clearResult();
@@ -41,11 +41,7 @@ export default class SearchPage extends Component {
               {searchResult.map(book => {
                 return (
                   <li key={book.id}>
-                    <Book
-                      book={book}
-                      updateShelf={updateShelf}
-                      addBook={addBook}
-                    />
+                    <Book book={book} updateShelf={updateShelf} />
                   </li>
                 );
               })}
