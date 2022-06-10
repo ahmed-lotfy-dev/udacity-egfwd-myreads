@@ -16,30 +16,46 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     books: [],
+    searchResult: [],
     query: "",
-    searchedBooks: [],
   };
-
   componentDidMount() {
     BooksAPI.getAll().then(data =>
-      this.setState({
-        books: data,
+      this.setState(prevState => {
+        return { ...prevState, books: data };
       })
     );
   }
 
+  updateShelf = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(() =>
+      BooksAPI.getAll().then(data =>
+        this.setState({
+          books: data,
+        })
+      )
+    );
+  };
+
   render() {
-    console.log(this.state.books);
+    console.log(this.state.searchResult);
     return (
       <div className="app">
         <Routes>
           <Route
             path="/"
-            element={<HomePage books={this.state.books} />}
+            element={
+              <HomePage books={this.state.books} update={this.updateShelf} />
+            }
           ></Route>
           <Route
             path="/search"
-            element={<SearchPage books={this.state.books} />}
+            element={
+              <SearchPage
+                result={this.searchBooks}
+                addBook={this.updateShelf}
+              />
+            }
           ></Route>
         </Routes>
       </div>
