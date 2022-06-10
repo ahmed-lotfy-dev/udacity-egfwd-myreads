@@ -2,7 +2,14 @@ import React, { Component } from "react";
 
 export default class Book extends Component {
   render() {
-    const { book } = this.props;
+    const { book, updateShelf } = this.props;
+    const changeSelectHandler = e => {
+      updateShelf(book, e.target.value);
+    };
+    const backgroundImg = book.imageLinks
+      ? book.imageLinks.thumbnail
+      : "http://via.placeholder.com/128x192?text=?";
+
     return (
       <div>
         <div className="book">
@@ -12,11 +19,11 @@ export default class Book extends Component {
               style={{
                 width: 128,
                 height: 193,
-                backgroundImage: `url(${book.imageLinks.thumbnail})`,
+                backgroundImage: `url(${backgroundImg})`,
               }}
             ></div>
             <div className="book-shelf-changer">
-              <select>
+              <select defaultValue={book.shelf} onChange={changeSelectHandler}>
                 <option value="move" disabled>
                   Move to...
                 </option>

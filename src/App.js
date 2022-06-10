@@ -27,6 +27,17 @@ class BooksApp extends React.Component {
     );
   }
 
+  addBook = bookId => {
+    BooksAPI.get(bookId).then(data =>
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          books: [data],
+        };
+      })
+    );
+  };
+
   updateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() =>
       BooksAPI.getAll().then(data =>
@@ -37,6 +48,16 @@ class BooksApp extends React.Component {
     );
   };
 
+  searchBooks = query => {
+    BooksAPI.search(query, 20).then(data =>
+      this.setState({ searchResult: [...data] })
+    );
+  };
+
+  clearResult = () => {
+    this.setState({ searchResult: [] });
+  };
+
   render() {
     console.log(this.state.searchResult);
     return (
@@ -45,15 +66,21 @@ class BooksApp extends React.Component {
           <Route
             path="/"
             element={
-              <HomePage books={this.state.books} update={this.updateShelf} />
+              <HomePage
+                books={this.state.books}
+                updateShelf={this.updateShelf}
+              />
             }
           ></Route>
           <Route
             path="/search"
             element={
               <SearchPage
+                clearResult={this.clearResult}
+                searchResult={this.state.searchResult}
                 result={this.searchBooks}
-                addBook={this.updateShelf}
+                addBook={this.addBook}
+                updateShelf={this.updateShelf}
               />
             }
           ></Route>

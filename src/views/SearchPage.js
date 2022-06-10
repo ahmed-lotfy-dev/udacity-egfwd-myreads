@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import * as BooksAPI from "../BooksAPI";
 import Book from "../components/Book";
-export default class SearchPage extends Component {
-  state = {
-    searchResult: [],
-  };
-  searchBooks = query => {
-    BooksAPI.search(query, 20).then(data =>
-      this.setState({ searchResult: [...data] })
-    );
-  };
 
+export default class SearchPage extends Component {
   render() {
-    console.log(this.state.searchResult);
+    const { result, searchResult, updateShelf, addBook } = this.props;
+    const handleInputChange = e => {
+      e.preventDefault();
+      e.target.value.length === 0 && this.props.clearResult();
+      e.target.value.length > 0 && result(e.target.value.trim());
+    };
     return (
       <div>
         <div className="search-books">
@@ -31,10 +27,7 @@ export default class SearchPage extends Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
               <input
-                onChange={e => {
-                  e.preventDefault();
-                  this.searchBooks(e.target.value);
-                }}
+                onChange={handleInputChange}
                 type="text"
                 placeholder="Search by title or author"
               />
@@ -42,10 +35,17 @@ export default class SearchPage extends Component {
           </div>
           <div className="search-books-results">
             <ol className="books-grid">
-              {this.state.searchResult.map(book => {
+              {/* {searchResult.length === 0 && (
+                <div>No Books Were Found For This Search</div>
+              )} */}
+              {searchResult.map(book => {
                 return (
                   <li key={book.id}>
-                    <Book book={book} />
+                    <Book
+                      book={book}
+                      updateShelf={updateShelf}
+                      addBook={addBook}
+                    />
                   </li>
                 );
               })}

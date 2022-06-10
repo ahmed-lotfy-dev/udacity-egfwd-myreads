@@ -4,7 +4,7 @@ import Shelf from "../components/Shelf";
 
 export default class HomePage extends Component {
   render() {
-    const { books } = this.props;
+    const { books, updateShelf } = this.props;
     return (
       <div>
         <div className="list-books">
@@ -13,9 +13,24 @@ export default class HomePage extends Component {
           </div>
           <div className="list-books-content">
             <div>
-              <Shelf books={books} shelf="currentlyReading" />
-              <Shelf books={books} shelf="wantToRead" />
-              <Shelf books={books} shelf="read" />
+              <Shelf
+                books={books}
+                updateShelf={updateShelf}
+                shelf="currentlyReading"
+                shelfTitle="Currently Reading"
+              />
+              <Shelf
+                books={books}
+                updateShelf={updateShelf}
+                shelf="wantToRead"
+                shelfTitle="Want To Read"
+              />
+              <Shelf
+                books={books}
+                updateShelf={updateShelf}
+                shelf="read"
+                shelfTitle="Read"
+              />
             </div>
           </div>
           <div className="open-search">
