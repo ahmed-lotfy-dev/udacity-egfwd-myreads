@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Book from "../components/Book";
-
+import PropTypes from "prop-types";
 export default class SearchPage extends Component {
   render() {
     const { books, result, searchResult, updateShelf } = this.props;
@@ -59,3 +59,10 @@ export default class SearchPage extends Component {
     );
   }
 }
+
+SearchPage.propTypes = {
+  books: PropTypes.array,
+  result: PropTypes.array,
+  searchedBook: PropTypes.array,
+  updateShelf: PropTypes.func,
+};
