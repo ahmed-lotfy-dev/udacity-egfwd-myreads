@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function Book({ book, updateShelf }) {
+export default function Book({ books, book, updateShelf }) {
   const changeSelectHandler = e => {
     updateShelf(book, e.target.value);
   };
@@ -11,6 +11,7 @@ export default function Book({ book, updateShelf }) {
     : "http://via.placeholder.com/128x192?text=?";
 
   Book.propTypes = {
+    books: PropTypes.array,
     book: PropTypes.object,
     updateShelf: PropTypes.func,
   };

@@ -25,9 +25,9 @@ function App() {
     );
   };
 
-  const searchBooks = query => {
+  function searchBooks(query) {
     BooksAPI.search(query).then(data => setSearchResult([...data]));
-  };
+  }
 
   const clearResult = () => {
     setSearchResult([]);
@@ -44,6 +44,7 @@ function App() {
           path="/search"
           element={
             <SearchPage
+              books={books}
               clearResult={clearResult}
               searchResult={searchResult}
               result={searchBooks}
