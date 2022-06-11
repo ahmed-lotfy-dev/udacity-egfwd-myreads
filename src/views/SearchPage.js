@@ -4,12 +4,19 @@ import Book from "../components/Book";
 
 export default class SearchPage extends Component {
   render() {
-    const { result, searchResult, updateShelf } = this.props;
+    const { books, result, searchResult, updateShelf } = this.props;
     const handleInputChange = e => {
       e.preventDefault();
       e.target.value.length === 0 && this.props.clearResult();
       e.target.value.length > 0 && result(e.target.value.trim());
     };
+
+    const validatedBooks = searchResult.map(searchedBook => {
+      const myBook = books.filter(myBook => myBook.id === searchedBook.id)[0];
+      searchedBook.shelf = myBook ? myBook.shelf : "none";
+      return searchedBook;
+    });
+
     return (
       <div>
         <div className="search-books">
@@ -38,7 +45,7 @@ export default class SearchPage extends Component {
               {/* {searchResult.length === 0 && (
                 <div>No Books Were Found For This Search</div>
               )} */}
-              {searchResult.map(book => {
+              {validatedBooks.map(book => {
                 return (
                   <li key={book.id}>
                     <Book book={book} updateShelf={updateShelf} />

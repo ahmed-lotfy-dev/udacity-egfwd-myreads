@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export default function Book({ books, book, updateShelf }) {
+export default function Book({ books, book, updateShelf, searchedBook }) {
   const changeSelectHandler = e => {
     updateShelf(book, e.target.value);
   };
@@ -29,7 +29,10 @@ export default function Book({ books, book, updateShelf }) {
             }}
           ></div>
           <div className="book-shelf-changer">
-            <select defaultValue={book.shelf} onChange={changeSelectHandler}>
+            <select
+              defaultValue={book.shelf || searchedBook.shelf}
+              onChange={changeSelectHandler}
+            >
               <option value="move">Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
